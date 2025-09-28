@@ -2,6 +2,7 @@ package com.open.logboard_grpc.controller;
 
 import com.open.logboard_grpc.model.LogEntry;
 import com.open.logboard_grpc.service.LogStorageService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +15,10 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class LogApiController {
 
-    @Autowired
-    private LogStorageService logStorageService;
+    private final LogStorageService logStorageService;
 
     @GetMapping("/logs")
     public List<LogEntry> getAllLogs() {
