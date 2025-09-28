@@ -1,4 +1,4 @@
-package com.open.serverc;
+package com.open.serverb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,11 +7,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 
-public class ServerCApplication {
+public class ServerBApplication {
 
     public static void main(String[] args) {
 
-        SpringApplication.run(ServerCApplication.class, args);
+        SpringApplication.run(ServerBApplication.class, args);
     }
 
 }

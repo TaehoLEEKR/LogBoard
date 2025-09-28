@@ -1,0 +1,12 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: ServerB
+
+logboard:
+  central:
+    url: http://localhost:9090  # A서버 HTTP 주소
+  server:
+    name: ServerB
