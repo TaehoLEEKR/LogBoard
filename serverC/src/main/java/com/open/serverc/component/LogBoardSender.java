@@ -1,4 +1,4 @@
-package com.open.serverb.component;
+package com.open.serverc.component;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -26,10 +26,10 @@ public class LogBoardSender {
 
     private final String[] levels = {"INFO", "WARN", "ERROR", "DEBUG"};
     private final String[] messages = {
-            "서버B에서 사용자 로그인 처리",
-            "서버B에서 데이터 처리 완료",
-            "서버B에서 오류 발생",
-            "서버B에서 배치 작업 시작"
+            "서버C에서 사용자 로그인 처리",
+            "서버C에서 데이터 처리 완료",
+            "서버C에서 오류 발생",
+            "서버C에서 배치 작업 시작"
     };
 
     /**
@@ -55,8 +55,8 @@ public class LogBoardSender {
                 .retrieve()
                 .bodyToMono(String.class)
                 .subscribe(
-                        result -> System.out.println("로그 전송 성공: " + message),
-                        error -> System.err.println("로그 전송 실패: " + error.getMessage())
+                        result -> System.out.println("C 서버 로그 전송 성공: " + message),
+                        error -> System.err.println("C 서버 로그 전송 실패: " + error.getMessage())
                 );
     }
 }
