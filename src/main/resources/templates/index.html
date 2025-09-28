@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LogBoard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .header { background: #007bff; color: white; padding: 15px; margin-bottom: 20px; }
+        .controls button { margin: 5px; padding: 10px; }
+        .log-item { padding: 10px; border-bottom: 1px solid #eee; }
+        .server { font-weight: bold; }
+        .level { padding: 3px 8px; border-radius: 3px; color: white; }
+        .ERROR { background: #dc3545; }
+        .WARN { background: #ffc107; color: black; }
+        .INFO { background: #007bff; }
+        .DEBUG { background: #6c757d; }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>LogBoard - 중앙 로그 수집 시스템</h1>
+</div>
+
+<div class="controls">
+    <button onclick="loadLogs()">전체 로그</button>
+    <button onclick="loadServerLogs('A')">서버 A</button>
+    <button onclick="loadServerLogs('B')">서버 B</button>
+    <button onclick="loadServerLogs('C')">서버 C</button>
+    <button onclick="clearLogs()">로그 삭제</button>
+</div>
+
+<div id="logs"></div>
+
+<script>
+    function loadLogs() {
+        fetch('/api/logs')
+            .then(r => r.json())
+            .then(logs => {
+                const html = logs.map(log => `
+                        <div class="log-item">
+                            <span class="server">[${log.serverName}]</span>
+                            <span class="level ${log.level}">${log.level}</span>
+                            ${log.message}
+                            <small>(${log.timestamp})</small>
+                        </div>
+                    `).join('');
+                document.getElementById('logs').innerHTML = html;
+            });
+    }
+
+    function loadServerLogs(server) {
+        fetch(`/api/logs/server/${server}`)
+            .then(r => r.json())
+            .then(logs => {
+                const html = logs.map(log => `
+                        <div class="log-item">
+                            <span class="level ${log.level}">${log.level}</span>
+                            ${log.message}
+                            <small>(${log.timestamp})</small>
+                        </div>
+                    `).join('');
+                document.getElementById('logs').innerHTML = html;
+            });
+    }
+
+    function clearLogs() {
+        if(confirm('로그를 삭제하시겠습니까?')) {
+            fetch('/api/logs', {method: 'DELETE'})
+                .then(() => loadLogs());
+        }
+    }
+
+    // 페이지 로드시 로그 불러오기
+    loadLogs();
+
+    // 5초마다 자동 새로고침
+    setInterval(loadLogs, 5000);
+</script>
+</body>
+</html>

@@ -1,3 +1,16 @@
+server:
+  port: 9090
+
+grpc:
+  server:
+    port: 9091
+
 spring:
   application:
-    name: LogBoard_gRpc
+    name: LogBoard-Central-Server
+  thymeleaf:
+    cache: false
+
+logging:
+  level:
+    com.open.logboard_grpc: DEBUG
